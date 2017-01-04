@@ -16,7 +16,7 @@ namespace Ex02_Othelo
             board.SetCellValue(7, 6, 12);
             board.BoardPrint();
             System.Console.ReadLine();
-            //matan miki
+            //matan miki manor
         }
     }
 }
