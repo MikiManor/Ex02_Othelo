@@ -39,6 +39,10 @@ namespace Ex02_Othelo
                 {
                     m_MatrixCells[rowsCounter, columnsCounter]= null;
                 }
+            m_MatrixCells[(m_MatrixSize / 2)-1, (m_MatrixSize / 2)-1] = 0;
+            m_MatrixCells[(m_MatrixSize / 2)-1, (m_MatrixSize / 2)] = 1;
+            m_MatrixCells[(m_MatrixSize / 2), (m_MatrixSize / 2)-1] = 1;
+            m_MatrixCells[(m_MatrixSize / 2), (m_MatrixSize / 2)] = 0;
         }
 
         private int? GetCellValue(int i_RowNumber, int i_ColumnNumber)
