@@ -52,18 +52,23 @@ namespace Ex02_Othelo
         public void BoardPrint()
         {
             for (int rowsCounter = 0; rowsCounter < m_MatrixSize; rowsCounter++)
+            {
                 for (int columnsCounter = 0; columnsCounter < m_MatrixSize; columnsCounter++)
                 {
                     if (m_MatrixCells[rowsCounter, columnsCounter].HasValue)
                     {
                         int cellValue = m_MatrixCells[rowsCounter, columnsCounter].Value;
-                        Console.WriteLine(cellValue);
+                        Console.Write(cellValue);
+                        Console.Write(" , ");
                     }
                     else
                     {
-                        Console.WriteLine("Null Here");
+                        Console.Write("_");
+                        Console.Write(" , ");
                     }
                 }
+                Console.WriteLine(Environment.NewLine);
+            }
         }
 
         public int Matrix
