@@ -24,7 +24,7 @@ namespace Ex02_Othelo
     {
         private readonly int m_MatrixSize;
         private int?[,] m_MatrixCells;
-
+        char alphabet = 'A';
         public OtheloBoard(int i_MatrixSize)
         {
             m_MatrixSize = i_MatrixSize;
@@ -55,13 +55,26 @@ namespace Ex02_Othelo
         }
         public void BoardPrint()
         {
-            for (int rowsCounter = 0; rowsCounter < m_MatrixSize; rowsCounter++)
+            for (int rowsCounter = 0; rowsCounter <= m_MatrixSize; rowsCounter++)
             {
-                for (int columnsCounter = 0; columnsCounter < m_MatrixSize; columnsCounter++)
+                for (int columnsCounter = 0; columnsCounter <= m_MatrixSize; columnsCounter++)
                 {
-                    if (m_MatrixCells[rowsCounter, columnsCounter].HasValue)
+                    if (rowsCounter == 0 && columnsCounter == 0)
+                        Console.Write("    ");
+                    else if (rowsCounter == 0 && columnsCounter != 0)
                     {
-                        int cellValue = m_MatrixCells[rowsCounter, columnsCounter].Value;
+                        Console.Write(alphabet);
+                        alphabet++;
+                        Console.Write(" , ");
+                    }
+                    else if (rowsCounter != 0 && columnsCounter == 0)
+                    {
+                        Console.Write("{0}", (rowsCounter));
+                        Console.Write(" | ");
+                    }
+                    else if (m_MatrixCells[rowsCounter - 1, columnsCounter - 1].HasValue)
+                    {
+                        int cellValue = m_MatrixCells[rowsCounter - 1, columnsCounter - 1].Value;
                         Console.Write(cellValue);
                         Console.Write(" , ");
                     }

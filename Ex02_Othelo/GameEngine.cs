@@ -6,5 +6,10 @@ namespace Ex02_Othelo
 {
     class GameEngine
     {
+        public static List<string> NextMove()
+        {
+            List<string> moves = null;
+            return moves;
+        }//check avalible moves
     }
 }

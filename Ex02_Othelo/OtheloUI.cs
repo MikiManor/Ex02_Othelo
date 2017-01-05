@@ -13,7 +13,7 @@ namespace Ex02_Othelo
             Ex02.ConsoleUtils.Screen.Clear();
             do
             {
-                Console.Clear();
+               
                 Ex02.ConsoleUtils.Screen.Clear();
                 Console.WriteLine("{0}{0}{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
                 Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :/> ", Environment.NewLine);
@@ -52,17 +52,17 @@ namespace Ex02_Othelo
                 }
                 
             } while (menu >2 || menu < 0);
-
+            Ex02.ConsoleUtils.Screen.Clear();
             switch (menu)
             {
                 case 0:
                     Environment.Exit(0);
                     break;
                 case 1:
-                    StartPlay();//vs human
+                    StartPlay(boardSize);//vs human
                     break;
                 case 2:
-                    StartPlay();//vs pc
+                    StartPlay(boardSize);//vs pc
                     break;
                 default:
                     Environment.Exit(1);
@@ -70,9 +70,10 @@ namespace Ex02_Othelo
             }
 
         }
-        public static void StartPlay()
+        public static void StartPlay(int boardSize)
         {
-
+            OtheloBoard board = new OtheloBoard(boardSize);
+            board.BoardPrint();
         }
 
     }
