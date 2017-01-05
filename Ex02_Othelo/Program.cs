@@ -13,8 +13,8 @@ namespace Ex02_Othelo
             // OtheloGame.StartPlay();
             OtheloBoard board = new OtheloBoard(8);
             // board.BoardPrint();
-            
-            board.BoardPrint();
+            OtheloUI.OtheloUIMenu();
+            //board.BoardPrint();
             System.Console.ReadLine();
             //matan miki manor
         }
