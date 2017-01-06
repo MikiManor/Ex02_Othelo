@@ -24,7 +24,6 @@ namespace Ex02_Othelo
     {
         private readonly int m_MatrixSize;
         private int?[,] m_MatrixCells;
-        char alphabet = 'A';
         public OtheloBoard(int i_MatrixSize)
         {
             m_MatrixSize = i_MatrixSize;
@@ -63,8 +62,7 @@ namespace Ex02_Othelo
                         Console.Write("    ");
                     else if (rowsCounter == 0 && columnsCounter != 0)
                     {
-                        Console.Write(alphabet);
-                        alphabet++;
+                        Console.Write("{0}", (columnsCounter));
                         Console.Write(" , ");
                     }
                     else if (rowsCounter != 0 && columnsCounter == 0)

@@ -11,5 +11,10 @@ namespace Ex02_Othelo
             List<string> moves = null;
             return moves;
         }//check avalible moves
+        
+            public static bool CanBeAMove()
+        {
+            return true;
+        }//check if can be moves
     }
 }

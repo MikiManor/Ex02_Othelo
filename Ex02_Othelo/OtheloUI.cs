@@ -34,7 +34,7 @@ namespace Ex02_Othelo
                    
                     try
                     {
-                        boardSize = int.Parse(Console.ReadLine());
+                        boardSize = int.Parse(Console.ReadLine()); //add limit to max size 'Z' 
                     }
                     catch (Exception)
                     {
@@ -72,8 +72,37 @@ namespace Ex02_Othelo
         }
         public static void StartPlay(int boardSize)
         {
+            bool playernum=false;
+            int rowChoise;
+            int colChoise;
             OtheloBoard board = new OtheloBoard(boardSize);
-            board.BoardPrint();
+            while (GameEngine.CanBeAMove())
+            {
+                playernum = !playernum;
+                board.BoardPrint();
+                if (playernum)
+                {
+                    Console.WriteLine("Player 1: Make your move [row,col] : ");
+                }
+                else
+                {
+                    Console.WriteLine("Player 2: Make your move [row,col] : ");
+                }
+                try
+                {
+                    rowChoise = int.Parse(Console.ReadLine());
+                    colChoise = int.Parse(Console.ReadLine());
+                    Console.WriteLine("is: [{0},{1}]", rowChoise, colChoise);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Input ERROR. press any key...");
+                    throw;
+                }
+
+   
+            }
+           
         }
 
     }
