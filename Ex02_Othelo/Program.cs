@@ -9,11 +9,11 @@ namespace Ex02_Othelo
         public static void Main()
         {
             System.Console.WriteLine("Welcome to Othelo game, have fun!");
-            // OtheloUI OtheloGame = new OtheloUI();
-            // OtheloGame.StartPlay();
+            OtheloUI OtheloGame = new OtheloUI();
+            OtheloGame.OtheloUIMenu();
             
             // board.BoardPrint();
-            OtheloUI.OtheloUIMenu();
+            //OtheloUI.OtheloUIMenu();
             //board.BoardPrint();
             System.Console.ReadLine();
             //matan miki manor
