@@ -45,8 +45,8 @@ namespace Ex02_Othelo
             int.TryParse(chosenCell[0], out rowChoise);
             colChoise = (char.Parse(chosenCell[1]) - 64);
             Point playerPoint = new Point();
-            playerPoint.X = colChoise;
-            playerPoint.Y = rowChoise;
+            playerPoint.X = colChoise - 1 ;
+            playerPoint.Y = rowChoise - 1;
             if (ValidateMove(playerPoint, OtheloBoard.m_MatrixCells, symbolOfCurrentPlayer, symbolOfOtherPlayer))
             {
                 MakeMove(playerPoint, OtheloBoard.m_MatrixCells, symbolOfCurrentPlayer, symbolOfOtherPlayer);
