@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 public struct Point
@@ -24,6 +24,29 @@ namespace Ex02_Othelo
             return true;
         }//check if can be moves
 
+		public void  CreateFirstPlayer(string i_PlayerName)
+        {
+            m_Player1 = new Player(Piece.Black, i_PlayerName);
+        }
+
+        public string Player1
+        {
+            get { return m_Player1.PlayerName; }
+        }
+
+        public void CreateSecondPlayer(string i_PlayerName)
+        {
+            m_Player2 = new Player(Piece.White, i_PlayerName);
+        }
+
+        public string Player2
+        {
+            get { return m_Player2.PlayerName; }
+        }
+        public void CreateComputerPlayer()
+        {
+            m_Player2 = new Player(Piece.White, m_ComputerName);
+        }
         
         public bool HumanMove(string i_UserInput,bool i_IsFirstPlayer)
         {
@@ -56,43 +79,53 @@ namespace Ex02_Othelo
                 return false;
             }
         }
-        
 
-        public void  CreateFirstPlayer(string i_PlayerName)
+        public static bool ValidateMove(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer)
         {
-            m_Player1 = new Player(Piece.Black, i_PlayerName);
-        }
-
-        public string Player1
-        {
-            get { return m_Player1.PlayerName; }
-        }
-
-        public void CreateSecondPlayer(string i_PlayerName)
-        {
-            m_Player2 = new Player(Piece.White, i_PlayerName);
-        }
-
-        public string Player2
-        {
-            get { return m_Player2.PlayerName; }
-        }
-        public void CreateComputerPlayer()
-        {
-            m_Player2 = new Player(Piece.White, m_ComputerName);
-        }
-
-        public static bool ValidateMove(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
-        {
-            if (board[Move.Y,Move.X] != Piece.Empty)
+            if (board[Move.Y][Move.X] != Piece.Empty)
                 return false;
             else if (ValidateUp(Move, board, CurrentPlayer, OtherPlayer) || ValidateUpRight(Move, board, CurrentPlayer, OtherPlayer) || ValidateRight(Move, board, CurrentPlayer, OtherPlayer) || ValidateDownRight(Move, board, CurrentPlayer, OtherPlayer) || ValidateDown(Move, board, CurrentPlayer, OtherPlayer) || ValidateDownLeft(Move, board, CurrentPlayer, OtherPlayer) || ValidateLeft(Move, board, CurrentPlayer, OtherPlayer) || ValidateUpLeft(Move, board, CurrentPlayer, OtherPlayer))
             {
                 return true;
             }
-            else
+            else 
                 return false;
         }
+		
+		public static Point[] AvalibleMoves(Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer)
+        {
+            Point[] Tempvalidpoint = new Point[board.GetLength(0)* board.GetLength(0)];
+            Point Testpoint = new Point();
+            int k = 0;
+            int counter = 0;
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(0); j++)
+                {
+                    if (i == 4 && j == 6)
+                    {
+                        Console.Write("");
+                    }
+                    Testpoint.X = j;
+                    Testpoint.Y = i;
+                    if (ValidateMove(Testpoint, board, CurrentPlayer, OtherPlayer))
+                    {
+                        Tempvalidpoint[k].X = Testpoint.X;
+                        Tempvalidpoint[k].Y = Testpoint.Y;
+                        counter++;
+                        k++;
+                    }
+                }
+            }
+            Point[] NewValidPoint = new Point[counter];
+            for (int i = 0; i < counter; i++)
+            {
+                NewValidPoint[i].X = Tempvalidpoint[i].X;
+                NewValidPoint[i].Y = Tempvalidpoint[i].Y;
+            }
+            return NewValidPoint;
+          }
+		  
         public static bool ValidateUp(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
         {
             if (Move.Y <= 0)
@@ -108,16 +141,16 @@ namespace Ex02_Othelo
             return false;
         }
 
-        public static void MakeMove(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+        public static void MakeMove(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer)
         {
-            board[Move.Y,Move.X] = CurrentPlayer;
+            board[Move.Y][Move.X] = CurrentPlayer;
 
             if (ValidateUp(Move, board, CurrentPlayer, OtherPlayer))
             {
                 for (int i = Move.Y - 1; i >= 0; i--)
                 {
-                    if (board[i,Move.X] == OtherPlayer)
-                        board[i,Move.X] = CurrentPlayer;
+                    if (board[i][Move.X] == OtherPlayer)
+                        board[i][Move.X] = CurrentPlayer;
                     else
                         break;
                 }
@@ -126,8 +159,8 @@ namespace Ex02_Othelo
             {
                 for (int i = Move.Y - 1, j = Move.X + 1; i >= 0 && j < board.GetLength(0); i--, j++)
                 {
-                    if (board[i,j] == OtherPlayer)
-                        board[i,j] = CurrentPlayer;
+                    if (board[i][j] == OtherPlayer)
+                        board[i][j] = CurrentPlayer;
                     else
                         break;
                 }
@@ -136,8 +169,8 @@ namespace Ex02_Othelo
             {
                 for (int j = Move.X + 1; j < board.GetLength(0); j++)
                 {
-                    if (board[Move.Y,j] == OtherPlayer)
-                        board[Move.Y,j] = CurrentPlayer;
+                    if (board[Move.Y][j] == OtherPlayer)
+                        board[Move.Y][j] = CurrentPlayer;
                     else
                         break;
                 }
@@ -146,8 +179,8 @@ namespace Ex02_Othelo
             {
                 for (int i = Move.Y + 1, j = Move.X + 1; i < board.GetLength(0) && j < board.GetLength(0); i++, j++)
                 {
-                    if (board[i,j] == OtherPlayer)
-                        board[i,j] = CurrentPlayer;
+                    if (board[i][j] == OtherPlayer)
+                        board[i][j] = CurrentPlayer;
                     else
                         break;
                 }
@@ -156,8 +189,8 @@ namespace Ex02_Othelo
             {
                 for (int i = Move.Y + 1; i < board.GetLength(0); i++)
                 {
-                    if (board[i,Move.X] == OtherPlayer)
-                        board[i,Move.X] = CurrentPlayer;
+                    if (board[i][Move.X] == OtherPlayer)
+                        board[i][Move.X] = CurrentPlayer;
                     else
                         break;
                 }
@@ -166,8 +199,8 @@ namespace Ex02_Othelo
             {
                 for (int i = Move.Y + 1, j = Move.X - 1; i < board.GetLength(0) && j >= 0; i++, j--)
                 {
-                    if (board[i,Move.X] == OtherPlayer)
-                        board[i,Move.X] = CurrentPlayer;
+                    if (board[i][j] == OtherPlayer)
+                        board[i][j] = CurrentPlayer;
                     else
                         break;
                 }
@@ -176,8 +209,8 @@ namespace Ex02_Othelo
             {
                 for (int j = Move.X - 1; j >= 0; j--)
                 {
-                    if (board[Move.Y,j] == OtherPlayer)
-                        board[Move.Y,j] = CurrentPlayer;
+                    if (board[Move.Y][j] == OtherPlayer)
+                        board[Move.Y][j] = CurrentPlayer;
                     else
                         break;
                 }
@@ -186,118 +219,187 @@ namespace Ex02_Othelo
             {
                 for (int i = Move.Y - 1, j = Move.X - 1; i >= 0 && j >= 0; i--, j--)
                 {
-                    if (board[i,j] == OtherPlayer)
-                        board[i,j] = CurrentPlayer;
+                    if (board[i][j] == OtherPlayer)
+                        board[i][j] = CurrentPlayer;
                     else
                         break;
                 }
             }
         }
 
-        public static bool ValidateUpRight(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+        public static bool ValidateUp(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer)
         {
-            if (Move.Y <= 0 || Move.X >= board.GetLength(0) - 1)
+            if (Move.Y <= 0)
                 return false;
-            else if (board[Move.Y - 1,Move.X + 1] == OtherPlayer)
-                for (int i = Move.Y - 2, j = Move.X + 2; i >= 0 && j < board.GetLength(0); i--, j++)
+            else if (board[Move.Y - 1][Move.X] == OtherPlayer)
+                for (int i = Move.Y - 2; i >= 0; i--)
                 {
-                    if (board[i,j] == CurrentPlayer)
+                    if (board[i][Move.X] == CurrentPlayer)
+                    {
+                       // Console.WriteLine("ValidateUp");
                         return true;
-                    else if (board[i,Move.X] == Piece.Empty)
+                    }
+                    else if (board[i][Move.X] == Piece.Empty)
+                        return false;
+                }
+             return false;
+        }
+		
+        public static bool ValidateUpRight(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
+        {
+            if (Move.Y <= 0 || Move.X >= board.GetLength(0)-1)
+                return false;
+            else if (board[Move.Y-1][Move.X+1] == OtherPlayer)
+                for (int i = Move.Y - 2, j = Move.X+2; i >= 0 && j < board.GetLength(0); i--, j++)
+                {
+                    if (board[i][j] == CurrentPlayer)
+                    {
+                    //    Console.WriteLine("ValidateUpRight");
+                        return true;
+                    }
+                    else if (board[i][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateRight(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateRight(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.X >= board.GetLength(0) - 1)
                 return false;
-            else if (board[Move.Y,Move.X + 1] == OtherPlayer)
+            else if (board[Move.Y][Move.X+1] == OtherPlayer)
                 for (int j = Move.X + 2; j < board.GetLength(0); j++)
                 {
-                    if (board[Move.Y,j] == CurrentPlayer)
+                    if (board[Move.Y][j] == CurrentPlayer)
+                    {
+                      //  Console.WriteLine("ValidateRight");
                         return true;
-                    else if (board[Move.Y,Move.X] == Piece.Empty)
+                    }
+                    else if (board[Move.Y][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateDownRight(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateDownRight(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.Y >= board.GetLength(0) - 1 || Move.X >= board.GetLength(0) - 1)
                 return false;
-            else if (board[Move.Y + 1,Move.X + 1] == OtherPlayer)
+            else if (board[Move.Y+1][Move.X+1] == OtherPlayer)
                 for (int i = Move.Y + 2, j = Move.X + 2; i < board.GetLength(0) && j < board.GetLength(0); i++, j++)
                 {
-                    if (board[i,j] == CurrentPlayer)
+                    if (board[i][j] == CurrentPlayer)
+                    {
+                      //  Console.WriteLine("ValidateDownRight");
                         return true;
-                    else if (board[i,j] == Piece.Empty)
+                    }
+                    else if (board[i][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateDown(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateDown(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.Y >= board.GetLength(0) - 1)
                 return false;
-            else if (board[Move.Y + 1,Move.X] == OtherPlayer)
+            else if (board[Move.Y+1][Move.X] == OtherPlayer)
                 for (int i = Move.Y + 2; i < board.GetLength(0); i++)
                 {
-                    if (board[i,Move.X] == CurrentPlayer)
+                    if (board[i][Move.X] == CurrentPlayer)
+                    {
+                     //   Console.WriteLine("ValidateDown");
                         return true;
-                    else if (board[i,Move.X] == Piece.Empty)
+                    }
+                    else if (board[i][Move.X] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateDownLeft(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateDownLeft(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.Y >= board.GetLength(0) - 1 || Move.X <= 0)
                 return false;
-            else if (board[Move.Y + 1,Move.X - 1] == OtherPlayer)
+           else if (board[Move.Y+1][Move.X-1] == OtherPlayer)
                 for (int i = Move.Y + 2, j = Move.X - 2; i < board.GetLength(0) && j >= 0; i++, j--)
                 {
-                    if (board[i,Move.X] == CurrentPlayer)
+                    if (board[i][j] == CurrentPlayer)
+                    {
+                    //    Console.WriteLine("ValidateDownLeft");
                         return true;
-                    else if (board[i,j] == Piece.Empty)
+                    }
+                    else if (board[i][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateLeft(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateLeft(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.X <= 0)
                 return false;
-            else if (board[Move.Y,Move.X - 1] == OtherPlayer)
+            else if (board[Move.Y][Move.X-1] == OtherPlayer)
                 for (int j = Move.X - 2; j >= 0; j--)
                 {
-                    if (board[Move.Y,j] == CurrentPlayer)
+                    if (board[Move.Y][j] == CurrentPlayer)
+                    {
+                     //   Console.WriteLine("ValidateLeft");
                         return true;
-                    else if (board[Move.Y,j] == Piece.Empty)
+                    }
+                    else if (board[Move.Y][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
-        public static bool ValidateUpLeft(Point Move, Piece[,] board, Piece CurrentPlayer, Piece OtherPlayer)
+		
+        public static bool ValidateUpLeft(Point Move, Piece[][] board, Piece CurrentPlayer, Piece OtherPlayer )
         {
             if (Move.Y <= 0 || Move.X <= 0)
                 return false;
-            else if (board[Move.Y - 1,Move.X - 1] == OtherPlayer)
-                for (int i = Move.Y - 2, j = Move.X - 2; i >= 0 && j >= 0; i--, j--)
+            else if (board[Move.Y-1][Move.X-1] == OtherPlayer)
+                for (int i = Move.Y - 2,  j = Move.X - 2; i >= 0 && j >= 0; i--, j--)
                 {
-                    if (board[i,j] == CurrentPlayer)
+                    if (board[i][j] == CurrentPlayer)
+                    {
+                    //    Console.WriteLine("ValidateUpLeft");
                         return true;
-                    else if (board[i,j] == Piece.Empty)
+                    }
+                    else if (board[i][j] == Piece.Empty)
                         return false;
                 }
             return false;
         }
+		
         public static Point[] AvalibleMoves(Piece[,] board)
         {
             Point[] valpoint = new Point[board.GetLength(0) * board.GetLength(0)];
 
             return valpoint;
 
+        }
+		
+
+        public static Point ScoreCount(Piece[][] board)
+        {
+            Point score = new Point();
+            score.X = 0;
+            score.Y = 0;
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(0); j++)
+                {
+                    if (board[i][j]==Piece.Black)
+                    {
+                        score.X++;
+                    }
+                    if (board[i][j] == Piece.White)
+                    {
+                        score.Y++;
+                    }
+                }
+            }
+            return score;
         }
     }
 }
