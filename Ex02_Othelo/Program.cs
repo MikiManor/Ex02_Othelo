@@ -11,8 +11,6 @@ namespace Ex02_Othelo
             System.Console.WriteLine("Welcome to Othelo game, have fun!");
             OtheloUI OtheloGame = new OtheloUI();
             OtheloGame.OtheloUIMenu();
-            System.Console.WriteLine("Goodbye!");
-            System.Console.ReadLine();
         }
     }
 }
