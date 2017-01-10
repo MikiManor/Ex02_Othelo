@@ -11,12 +11,6 @@ namespace Ex02_Othelo
             System.Console.WriteLine("Welcome to Othelo game, have fun!");
             OtheloUI OtheloGame = new OtheloUI();
             OtheloGame.OtheloUIMenu();
-            
-            // board.BoardPrint();
-            //OtheloUI.OtheloUIMenu();
-            //board.BoardPrint();
-            System.Console.ReadLine();
-            //matan miki manor
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Ex02_Othelo
                 do
                 {
                     Console.WriteLine("{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
-                    Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :/> ", Environment.NewLine);
+                    Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :> ", Environment.NewLine);
                     
                     isMenuSelectionNumber = int.TryParse(Console.ReadLine(), out menuSelection);
                     if(!isMenuSelectionNumber ||  (menuSelection > 3 || menuSelection < 0))
