@@ -12,8 +12,8 @@ namespace Ex02_Othelo
     }
     public class OtheloBoard
     {
-        private readonly int m_MatrixSize;
-        public static Piece[,] m_MatrixCells;
+        private static int m_MatrixSize;
+        private static Piece[,] m_MatrixCells;
         public OtheloBoard(int i_MatrixSize)
         {
             m_MatrixSize = i_MatrixSize;
@@ -44,62 +44,16 @@ namespace Ex02_Othelo
             int cellColumn = i_CellLoaction.X;
             m_MatrixCells[cellRow, cellColumn] = i_CellValue;
         }
-        public void BoardPrint()
+
+
+        public Piece[,] Matrix
         {
-            for (int rowsCounter = 0; rowsCounter <= m_MatrixSize; rowsCounter++)
-            {
-                for (int columnsCounter = 0; columnsCounter <= m_MatrixSize; columnsCounter++)
-                {
-                    if (rowsCounter == 0 && columnsCounter == 0)
-                        Console.Write("    ");
-                    else if (rowsCounter == 0 && columnsCounter != 0)
-                    {
-                        Console.Write("{0}", (char)(columnsCounter + 64));
-                        Console.Write("   ");
-                    }
-                    else if (rowsCounter != 0 && columnsCounter == 0)
-                    {
-                        Console.Write("{0}", (rowsCounter));
-                        Console.Write(" | ");
-                    }
-                    else if (m_MatrixCells[rowsCounter - 1, columnsCounter - 1] != Piece.Empty)
-                    {
-                        string symbol = " ";
-                        Piece cellValue = m_MatrixCells[rowsCounter - 1, columnsCounter - 1];
-                        if (cellValue == Piece.Black)
-                        {
-                            symbol = "X";
-                        }else if (cellValue == Piece.White)
-                        {
-                            symbol = "O";
-                        }
-
-                        Console.Write(symbol);
-                        Console.Write(" | ");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                        Console.Write(" | ");
-                    }
-                }
-                StringBuilder lineSeparator = new StringBuilder();
-                //Console.WriteLine(Environment.NewLine);
-                lineSeparator.Append("\n");
-                for (int columnsCounter = 0; columnsCounter <= m_MatrixSize; columnsCounter++)
-                {
-                    lineSeparator.Append("====");
-                }
-                Console.WriteLine(lineSeparator);
-
-                    
-            }
+            get { return m_MatrixCells; }
+            
         }
-
-        public int Matrix
+        public int BoardSize
         {
             get { return m_MatrixSize; }
-            
         }
         
 
