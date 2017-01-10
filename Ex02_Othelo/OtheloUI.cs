@@ -19,21 +19,20 @@ namespace Ex02_Othelo
             Ex02.ConsoleUtils.Screen.Clear();
             do
             {
-
+                bool isMenuSelectionNumber = false;
                 Ex02.ConsoleUtils.Screen.Clear();
-                Console.WriteLine("{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
-                Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :/> ", Environment.NewLine);
-                try
+                do
                 {
-                    menuSelection = int.Parse(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Input ERROR. press any key...");
-                    menuSelection = 9;
-                    throw;
-                }
-
+                    Console.WriteLine("{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
+                    Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :/> ", Environment.NewLine);
+                    
+                    isMenuSelectionNumber = int.TryParse(Console.ReadLine(), out menuSelection);
+                    if(!isMenuSelectionNumber ||  (menuSelection > 3 || menuSelection < 0))
+                    {
+                        Ex02.ConsoleUtils.Screen.Clear();
+                        Console.WriteLine("Bad selection, Please try again...");
+                    }
+                } while (!isMenuSelectionNumber || (menuSelection > 3 || menuSelection < 0));
                 if (menuSelection == 3)
                 {
                     bool isBoardSizeValid = false;
@@ -44,9 +43,9 @@ namespace Ex02_Othelo
                         
                         Console.WriteLine("Please Choose a new board size :/> ");
                         isBoardSizeValid = int.TryParse(Console.ReadLine(), out boardSize);
-                        if(!isBoardSizeValid)
+                        if(!isBoardSizeValid || boardSize % 2 != 0)
                         {
-                            Console.WriteLine("Error! Board size should be a number!, press any key to try again...");
+                            Console.WriteLine("Error! Board size should be an even number!, press any key to try again...");
                             Console.ReadLine();
                             Ex02.ConsoleUtils.Screen.Clear();
                         }
@@ -62,14 +61,6 @@ namespace Ex02_Othelo
                     }
                     Ex02.ConsoleUtils.Screen.Clear();
                 }
-                if (menuSelection > 3 || menuSelection < 0)
-                {
-                    Console.WriteLine("Can't do that.... please enter valid option. press any key to continue...");
-                    Console.Beep();
-                    Console.ReadLine();
-
-                }
-
             } while (menuSelection > 2 || menuSelection < 0);
             Ex02.ConsoleUtils.Screen.Clear();
             switch (menuSelection)
@@ -129,6 +120,13 @@ namespace Ex02_Othelo
                             {
                                 Console.WriteLine("{0} -  your symbol is  {1} - Make your move : row,col : ", m_GameEngine.Player1.PlayerName, m_GameEngine.Player1.Symbol);
                                 userInput = Console.ReadLine();
+                                if (userInput.ToUpper() == "Q")
+                                {
+                                    Ex02.ConsoleUtils.Screen.Clear();
+                                    Console.WriteLine("Bye Bye");
+                                    System.Threading.Thread.Sleep(3000);
+                                    Environment.Exit(9);
+                                }
                                 humanMoveResponse = CheckAndSubmitUserInput(userInput, isPlayerOne);
                             }
                             else
@@ -146,6 +144,13 @@ namespace Ex02_Othelo
                                 {
                                     Console.WriteLine("{0} -  your symbol is  {1} - Make your move : row,col : ", m_GameEngine.Player2.PlayerName, m_GameEngine.Player2.Symbol);
                                     userInput = Console.ReadLine();
+                                    if (userInput.ToUpper() == "Q")
+                                    {
+                                        Ex02.ConsoleUtils.Screen.Clear();
+                                        Console.WriteLine("Bye Bye");
+                                        System.Threading.Thread.Sleep(3000);
+                                        Environment.Exit(9);
+                                    }
                                     humanMoveResponse = CheckAndSubmitUserInput(userInput, isPlayerOne);
                                 }
                                 else
@@ -212,11 +217,25 @@ namespace Ex02_Othelo
                 return false;
             }
             string[] chosenCell = i_UserInput.Split(',');
-            if(chosenCell[1].Length > 1)
+            if(chosenCell.Length != 2)
             {
                 return false;
             }
-            int.TryParse(chosenCell[0], out rowChoise);
+            if(chosenCell[1].Length > 1)
+            {
+                return false;
+            }else if(char.Parse(chosenCell[1]) > 'Z' && char.Parse(chosenCell[1]) < 'A')
+            {
+                return false;
+            }
+            {
+
+            }
+            bool isRowANumber = int.TryParse(chosenCell[0], out rowChoise);
+            if(!isRowANumber)
+            {
+                return false;
+            }
             colChoise = (char.Parse(chosenCell[1]) - 64);
             Point playerPoint = new Point();
             playerPoint.X = colChoise - 1;
@@ -250,6 +269,7 @@ namespace Ex02_Othelo
             Piece[,] matrixCells = m_GameEngine.Board;
             int boardSize = m_GameEngine.BoardSize;
             Console.WriteLine("Total Score : {3} : {1} | {4} : {2} {0}", Environment.NewLine,m_GameEngine.Player1.Score, m_GameEngine.Player2.Score, m_GameEngine.Player1.PlayerName, m_GameEngine.Player2.PlayerName);
+            Console.WriteLine("Black color is represented by X | White color is represented by O\n");
             for (int rowsCounter = 0; rowsCounter <= boardSize; rowsCounter++)
             {
                 for (int columnsCounter = 0; columnsCounter <= boardSize; columnsCounter++)
@@ -263,7 +283,7 @@ namespace Ex02_Othelo
                     }
                     else if (rowsCounter != 0 && columnsCounter == 0)
                     {
-                        Console.Write("{0}", (rowsCounter));
+                        Console.Write("{0}", (rowsCounter.ToString().PadLeft(2,'0')));
                         Console.Write(" | ");
                     }
                     else if (matrixCells[rowsCounter - 1, columnsCounter - 1] != Piece.Empty)

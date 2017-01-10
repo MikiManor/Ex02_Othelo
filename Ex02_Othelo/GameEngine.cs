@@ -147,7 +147,7 @@ namespace Ex02_Othelo
             Point pcmove = new Point();
             pcmove = PcAI(i_Board, validpointlist);
             MakeMove(pcmove, i_Board, i_CurrentPlayer, i_OtherPlayer);//pc choose play
-            Console.WriteLine("[PC will Play : {0},{1}] ", pcmove.Y +1, pcmove.X +1);
+            Console.WriteLine("[PC will Play : {0},{1}] ", pcmove.Y +1, (char)((pcmove.X +1)+64));
             System.Console.ReadLine();
         }
         public Point[] AvalibleMoves(Piece[,] i_Board, Piece i_CurrentPlayer, Piece i_OtherPlayer)
@@ -160,10 +160,6 @@ namespace Ex02_Othelo
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
-                    if (i == 4 && j == 6)
-                    {
-                        Console.Write("");
-                    }
                     Testpoint.X = j;
                     Testpoint.Y = i;
                     if (ValidateMove(Testpoint, i_Board, i_CurrentPlayer, i_OtherPlayer))
