@@ -12,7 +12,7 @@ namespace Ex02_Othelo
     public class GameEngine
     {
         private Player m_Player1, m_Player2;
-        private string m_ComputerName = "KOKO";
+        private string m_ComputerName = Environment.MachineName;
         private OtheloBoard m_Board;
 
         public Player Player1

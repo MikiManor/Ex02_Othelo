@@ -14,6 +14,18 @@ namespace Ex02_Othelo
     {
         private static int m_MatrixSize;
         private static Piece[,] m_MatrixCells;
+
+        public Piece[,] Matrix
+        {
+            get { return m_MatrixCells; }
+
+        }
+
+        public int BoardSize
+        {
+            get { return m_MatrixSize; }
+        }
+
         public OtheloBoard(int i_MatrixSize)
         {
             m_MatrixSize = i_MatrixSize;
@@ -38,25 +50,12 @@ namespace Ex02_Othelo
         {
             return m_MatrixCells[i_RowNumber, i_ColumnNumber];
         }
-        public void SetCellValue(Point i_CellLoaction, Piece i_CellValue)
+
+        private void SetCellValue(Point i_CellLoaction, Piece i_CellValue)
         {
             int cellRow = i_CellLoaction.Y;
             int cellColumn = i_CellLoaction.X;
             m_MatrixCells[cellRow, cellColumn] = i_CellValue;
         }
-
-
-        public Piece[,] Matrix
-        {
-            get { return m_MatrixCells; }
-            
-        }
-        public int BoardSize
-        {
-            get { return m_MatrixSize; }
-        }
-        
-
-
     }
 }

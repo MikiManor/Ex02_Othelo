@@ -8,14 +8,7 @@ namespace Ex02_Othelo
     {
         private readonly Piece r_Symbol;
         private readonly string r_PlayerName;
-        private int m_Score;
-
-        public Player(Piece i_Symbol, string io_PlayerName)
-        {
-            r_PlayerName = io_PlayerName;
-            m_Score = 0;
-            r_Symbol = i_Symbol;
-        }
+        private int m_Score = 0;
 
         public string PlayerName
         {
@@ -34,7 +27,15 @@ namespace Ex02_Othelo
 
         public void IncreaseScore()
         {
-            m_Score += m_Score ;
+            m_Score += m_Score;
         }
+
+        public Player(Piece i_Symbol, string io_PlayerName)
+        {
+            r_PlayerName = io_PlayerName;
+            m_Score = 0;
+            r_Symbol = i_Symbol;
+        }
+        
     }
 }

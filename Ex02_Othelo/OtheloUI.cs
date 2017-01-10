@@ -11,6 +11,7 @@ namespace Ex02_Othelo
         {
             m_GameEngine = new GameEngine();
         }
+
         public void OtheloUIMenu()
         {
             int boardSize = 8;
@@ -20,7 +21,7 @@ namespace Ex02_Othelo
             {
 
                 Ex02.ConsoleUtils.Screen.Clear();
-                Console.WriteLine("{0}{0}{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
+                Console.WriteLine("{0}Board size is: {1}{0}{0}{0}", Environment.NewLine, boardSize);
                 Console.WriteLine("(1) play vs human.{0}(2) play vs pc.{0}(3) Change board size.{0}(0) Exit.{0}{0}{0}Please Choose :/> ", Environment.NewLine);
                 try
                 {
@@ -88,6 +89,7 @@ namespace Ex02_Othelo
             }
 
         }
+
         private void StartPlay(int i_boardSize, int i_menuSelection)
         {
             string userInput = "";
@@ -174,10 +176,12 @@ namespace Ex02_Othelo
                 if (scoreOfPlayer1 > scoreOfPlayer2)
                 {
                     winnerPlayer = m_GameEngine.Player1.PlayerName;
+                    m_GameEngine.Player1.IncreaseScore();
                 }
                 else if (scoreOfPlayer1 < scoreOfPlayer2)
                 {
                     winnerPlayer = m_GameEngine.Player2.PlayerName;
+                    m_GameEngine.Player2.IncreaseScore();
                 }
                 else
                 {
@@ -225,6 +229,7 @@ namespace Ex02_Othelo
                 return m_GameEngine.HumanMove(playerPoint, i_IsPlayerOne);
             }
         }
+
         private void PlayerVsPlayer()
         {
             Console.WriteLine("Player 1 - What is your name? ");
@@ -232,19 +237,19 @@ namespace Ex02_Othelo
             Console.WriteLine("Player 2 - What is your name? ");
             m_GameEngine.CreateSecondPlayer(Console.ReadLine());
         }
+
         private void PlayerVsComputer()
         {
             Console.WriteLine("Player 1 - What is your name? ");
             m_GameEngine.CreateFirstPlayer(Console.ReadLine());
             m_GameEngine.CreateComputerPlayer();
         }
-
-
-
-        public void BoardPrint()
+        
+        private void BoardPrint()
         {
             Piece[,] matrixCells = m_GameEngine.Board;
             int boardSize = m_GameEngine.BoardSize;
+            Console.WriteLine("Total Score : {3} : {1} | {4} : {2} {0}", Environment.NewLine,m_GameEngine.Player1.Score, m_GameEngine.Player2.Score, m_GameEngine.Player1.PlayerName, m_GameEngine.Player2.PlayerName);
             for (int rowsCounter = 0; rowsCounter <= boardSize; rowsCounter++)
             {
                 for (int columnsCounter = 0; columnsCounter <= boardSize; columnsCounter++)
