@@ -8,7 +8,7 @@ namespace Ex02_Othelo
     {
         private readonly Piece r_Symbol;
         private readonly string r_PlayerName;
-        private int m_Score = 0;
+        private static int m_Score = 0;
 
         public string PlayerName
         {
