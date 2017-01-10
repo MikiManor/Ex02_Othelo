@@ -115,6 +115,8 @@ namespace Ex02_Othelo
 
                 if ((ScoreCount(tempboard).Y > tempscore.Y) && (ScoreCount(tempboard).X < tempscore.X))
                 {
+                    tempscore.Y = ScoreCount(tempboard).Y;
+                    tempscore.X = ScoreCount(tempboard).X;
                     goodplay.X = validpointlist[k].X;
                     goodplay.Y = validpointlist[k].Y;
                 }
