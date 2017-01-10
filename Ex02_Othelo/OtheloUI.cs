@@ -181,12 +181,10 @@ namespace Ex02_Othelo
                 if (scoreOfPlayer1 > scoreOfPlayer2)
                 {
                     winnerPlayer = m_GameEngine.Player1.PlayerName;
-                    m_GameEngine.Player1.IncreaseScore();
                 }
                 else if (scoreOfPlayer1 < scoreOfPlayer2)
                 {
                     winnerPlayer = m_GameEngine.Player2.PlayerName;
-                    m_GameEngine.Player2.IncreaseScore();
                 }
                 else
                 {
@@ -268,7 +266,6 @@ namespace Ex02_Othelo
         {
             Piece[,] matrixCells = m_GameEngine.Board;
             int boardSize = m_GameEngine.BoardSize;
-            Console.WriteLine("Total Score : {3} : {1} | {4} : {2} {0}", Environment.NewLine,m_GameEngine.Player1.Score, m_GameEngine.Player2.Score, m_GameEngine.Player1.PlayerName, m_GameEngine.Player2.PlayerName);
             Console.WriteLine("Black color is represented by X | White color is represented by O\n");
             for (int rowsCounter = 0; rowsCounter <= boardSize; rowsCounter++)
             {
